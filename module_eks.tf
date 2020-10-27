@@ -5,8 +5,11 @@ module "eks" {
 
   # Required Arguments
   # Assumptions are made but details for each default value
-  cluster_name  = var.eks_module_cluster_name
-  worker_groups = var.eks_module_worker_groups
+  cluster_name    = var.eks_module_cluster_name
+  worker_groups   = var.eks_module_worker_groups
+  cluster_version = var.eks_module_cluster_version
+
+  tags = module.git_metadata.all
 }
 
 variable "eks_module_cluster_name" {
@@ -27,4 +30,11 @@ variable "eks_module_worker_groups" {
       asg_min_size  = 1
     },
   ]
+}
+
+variable "eks_module_cluster_version" {
+  description = "Kubernetes version to use for the EKS cluster."
+  type        = string
+  # Assume latest Kubernetes cluster version
+  default = "1.18"
 }
